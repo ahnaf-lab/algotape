@@ -1,0 +1,142 @@
+[
+  {
+    "algorithm": "bfs",
+    "step": 0,
+    "event": "init",
+    "state": {
+      "start": "A",
+      "queue": [
+        "A"
+      ],
+      "visited": [
+        "A"
+      ]
+    }
+  },
+  {
+    "algorithm": "bfs",
+    "step": 1,
+    "event": "dequeue",
+    "state": {
+      "node": "A",
+      "queue": [],
+      "visited": [
+        "A"
+      ]
+    }
+  },
+  {
+    "algorithm": "bfs",
+    "step": 2,
+    "event": "visit",
+    "state": {
+      "node": "A",
+      "neighbor": "B",
+      "queue": [
+        "B"
+      ],
+      "visited": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  {
+    "algorithm": "bfs",
+    "step": 3,
+    "event": "visit",
+    "state": {
+      "node": "A",
+      "neighbor": "C",
+      "queue": [
+        "B",
+        "C"
+      ],
+      "visited": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "algorithm": "bfs",
+    "step": 4,
+    "event": "dequeue",
+    "state": {
+      "node": "B",
+      "queue": [
+        "C"
+      ],
+      "visited": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  },
+  {
+    "algorithm": "bfs",
+    "step": 5,
+    "event": "visit",
+    "state": {
+      "node": "B",
+      "neighbor": "D",
+      "queue": [
+        "C",
+        "D"
+      ],
+      "visited": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "algorithm": "bfs",
+    "step": 6,
+    "event": "dequeue",
+    "state": {
+      "node": "C",
+      "queue": [
+        "D"
+      ],
+      "visited": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "algorithm": "bfs",
+    "step": 7,
+    "event": "dequeue",
+    "state": {
+      "node": "D",
+      "queue": [],
+      "visited": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  },
+  {
+    "algorithm": "bfs",
+    "step": 8,
+    "event": "done",
+    "state": {
+      "visited": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  }
+]

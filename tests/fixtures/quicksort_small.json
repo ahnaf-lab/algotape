@@ -1,0 +1,208 @@
+[
+  {
+    "algorithm": "quicksort",
+    "step": 0,
+    "event": "init",
+    "state": {
+      "array": [
+        5,
+        3,
+        8,
+        1,
+        9,
+        2
+      ]
+    }
+  },
+  {
+    "algorithm": "quicksort",
+    "step": 1,
+    "event": "pivot",
+    "state": {
+      "low": 0,
+      "high": 5,
+      "pivot": 2,
+      "array": [
+        5,
+        3,
+        8,
+        1,
+        9,
+        2
+      ]
+    }
+  },
+  {
+    "algorithm": "quicksort",
+    "step": 2,
+    "event": "swap",
+    "state": {
+      "i": 0,
+      "j": 3,
+      "array": [
+        1,
+        3,
+        8,
+        5,
+        9,
+        2
+      ]
+    }
+  },
+  {
+    "algorithm": "quicksort",
+    "step": 3,
+    "event": "swap",
+    "state": {
+      "i": 1,
+      "j": 5,
+      "array": [
+        1,
+        2,
+        8,
+        5,
+        9,
+        3
+      ]
+    }
+  },
+  {
+    "algorithm": "quicksort",
+    "step": 4,
+    "event": "partitioned",
+    "state": {
+      "low": 0,
+      "high": 5,
+      "pivot_index": 1,
+      "array": [
+        1,
+        2,
+        8,
+        5,
+        9,
+        3
+      ]
+    }
+  },
+  {
+    "algorithm": "quicksort",
+    "step": 5,
+    "event": "pivot",
+    "state": {
+      "low": 2,
+      "high": 5,
+      "pivot": 3,
+      "array": [
+        1,
+        2,
+        8,
+        5,
+        9,
+        3
+      ]
+    }
+  },
+  {
+    "algorithm": "quicksort",
+    "step": 6,
+    "event": "swap",
+    "state": {
+      "i": 2,
+      "j": 5,
+      "array": [
+        1,
+        2,
+        3,
+        5,
+        9,
+        8
+      ]
+    }
+  },
+  {
+    "algorithm": "quicksort",
+    "step": 7,
+    "event": "partitioned",
+    "state": {
+      "low": 2,
+      "high": 5,
+      "pivot_index": 2,
+      "array": [
+        1,
+        2,
+        3,
+        5,
+        9,
+        8
+      ]
+    }
+  },
+  {
+    "algorithm": "quicksort",
+    "step": 8,
+    "event": "pivot",
+    "state": {
+      "low": 3,
+      "high": 5,
+      "pivot": 8,
+      "array": [
+        1,
+        2,
+        3,
+        5,
+        9,
+        8
+      ]
+    }
+  },
+  {
+    "algorithm": "quicksort",
+    "step": 9,
+    "event": "swap",
+    "state": {
+      "i": 4,
+      "j": 5,
+      "array": [
+        1,
+        2,
+        3,
+        5,
+        8,
+        9
+      ]
+    }
+  },
+  {
+    "algorithm": "quicksort",
+    "step": 10,
+    "event": "partitioned",
+    "state": {
+      "low": 3,
+      "high": 5,
+      "pivot_index": 4,
+      "array": [
+        1,
+        2,
+        3,
+        5,
+        8,
+        9
+      ]
+    }
+  },
+  {
+    "algorithm": "quicksort",
+    "step": 11,
+    "event": "done",
+    "state": {
+      "array": [
+        1,
+        2,
+        3,
+        5,
+        8,
+        9
+      ]
+    }
+  }
+]
