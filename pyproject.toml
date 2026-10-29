@@ -11,3 +11,6 @@ dependencies = []
 
 [tool.setuptools.packages.find]
 include = ["algotape*"]
+
+[tool.setuptools.package-data]
+"algotape.samples" = ["*.json"]

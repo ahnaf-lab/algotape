@@ -11,8 +11,10 @@ to emit their internal state as a deterministic sequence of frames via
 Python generators, those frame sequences can be saved to and loaded back
 from a "cassette" file, a single frame's array/graph state can be drawn
 onto a curses screen, and a play/pause/step/rewind state machine can
-scrub through a cassette's frame index. Wiring that state machine into
-a live, interactive curses TUI comes in a later milestone.
+scrub through a cassette's frame index. Three cassettes also ship
+pre-recorded inside the package (a maze, a graph, an array) for a
+zero-setup demo. Wiring the state machine into a live, interactive
+curses TUI comes in a later milestone.
 
 ## Install
 
@@ -112,6 +114,27 @@ player.rewind()         # jump back to frame 0 and pause
 
 Wiring this into the curses `view` command as a live, interactive
 playback TUI comes in a later milestone.
+
+### Sample cassettes
+
+Three cassettes ship inside the package itself — a maze, a weighted graph,
+and an array — so there's a zero-setup demo to play or view without
+recording anything first:
+
+```
+python -m algotape.cli samples
+python -m algotape.cli play --sample maze
+python -m algotape.cli view --sample graph --step 3
+```
+
+- `maze` — BFS exploring a small walled grid
+- `graph` — Dijkstra finding shortest paths over a weighted graph
+- `array` — quicksort sorting a small array
+
+`--sample NAME` is accepted anywhere `play`/`view` would otherwise take a
+cassette file `PATH`. `algotape.samples.load_sample(name)` loads the same
+bundled cassette from Python, and `algotape.samples.sample_names()` lists
+what's available.
 
 Run the test suite with:
 

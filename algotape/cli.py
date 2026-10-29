@@ -2,8 +2,10 @@
 
 ``record`` runs a demo algorithm and prints its frame sequence as one JSON
 object per line, optionally saving the run to a cassette file. ``play``
-loads a previously saved cassette and prints its frames the same way.
-``view`` draws a single frame from a cassette onto a curses screen. The
+loads a cassette and prints its frames the same way. ``view`` draws a
+single frame from a cassette onto a curses screen. ``play`` and ``view``
+can load a cassette either from a file ``PATH`` or, for a zero-setup demo,
+from a bundled ``--sample`` name; ``samples`` lists what's available. The
 full VCR-style interactive playback controls (step, pause, rewind) come
 in a later milestone.
 """
@@ -11,9 +13,9 @@ in a later milestone.
 import argparse
 import json
 import sys
-from typing import List, Optional
+from typing import List, Optional, Tuple
 
-from . import cassette
+from . import cassette, samples
 from .algorithms.bfs import bfs_frames
 from .algorithms.dijkstra import dijkstra_frames
 from .algorithms.quicksort import quicksort_frames
@@ -61,14 +63,30 @@ def _build_parser() -> argparse.ArgumentParser:
     )
 
     play_parser = subparsers.add_parser(
-        "play", help="load a cassette file and print its frame sequence"
+        "play", help="load a cassette and print its frame sequence"
     )
-    play_parser.add_argument("path", metavar="PATH", help="cassette file to load")
+    play_parser.add_argument(
+        "path", nargs="?", metavar="PATH", help="cassette file to load"
+    )
+    play_parser.add_argument(
+        "--sample",
+        choices=samples.sample_names(),
+        metavar="NAME",
+        help="load a bundled sample cassette instead of PATH (see the `samples` command)",
+    )
 
     view_parser = subparsers.add_parser(
-        "view", help="draw one frame from a cassette file on a curses screen"
+        "view", help="draw one frame from a cassette on a curses screen"
     )
-    view_parser.add_argument("path", metavar="PATH", help="cassette file to load")
+    view_parser.add_argument(
+        "path", nargs="?", metavar="PATH", help="cassette file to load"
+    )
+    view_parser.add_argument(
+        "--sample",
+        choices=samples.sample_names(),
+        metavar="NAME",
+        help="load a bundled sample cassette instead of PATH (see the `samples` command)",
+    )
     view_parser.add_argument(
         "--step",
         type=int,
@@ -76,7 +94,36 @@ def _build_parser() -> argparse.ArgumentParser:
         help="index into the cassette's frame sequence to draw (default: 0)",
     )
 
+    subparsers.add_parser(
+        "samples", help="list the bundled sample cassettes usable with --sample"
+    )
+
     return parser
+
+
+def _load_tape(args: argparse.Namespace) -> Tuple[Optional[cassette.Cassette], int]:
+    """Resolve the ``play``/``view`` cassette source: a file path or a bundled sample.
+
+    Returns ``(tape, 0)`` on success, or ``(None, exit_code)`` after already
+    printing an error, so callers can just propagate the exit code.
+    """
+    if args.sample and args.path:
+        print("algotape: provide either PATH or --sample, not both", file=sys.stderr)
+        return None, 1
+    if args.sample:
+        try:
+            return samples.load_sample(args.sample), 0
+        except samples.SampleNotFoundError as exc:
+            print(f"algotape: unknown sample: {exc}", file=sys.stderr)
+            return None, 1
+    if args.path:
+        try:
+            return cassette.load(args.path), 0
+        except (OSError, cassette.CassetteError) as exc:
+            print(f"algotape: {exc}", file=sys.stderr)
+            return None, 1
+    print("algotape: provide a cassette PATH or --sample NAME", file=sys.stderr)
+    return None, 1
 
 
 def main(argv: Optional[List[str]] = None) -> int:
@@ -91,11 +138,14 @@ def main(argv: Optional[List[str]] = None) -> int:
             print(json.dumps(frame.to_dict()))
         return 0
 
-    try:
-        tape = cassette.load(args.path)
-    except (OSError, cassette.CassetteError) as exc:
-        print(f"algotape: {exc}", file=sys.stderr)
-        return 1
+    if args.command == "samples":
+        for name in samples.sample_names():
+            print(f"{name}: {samples.sample_description(name)}")
+        return 0
+
+    tape, exit_code = _load_tape(args)
+    if tape is None:
+        return exit_code
 
     if args.command == "play":
         for frame in tape.frames:

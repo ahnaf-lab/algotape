@@ -1,0 +1,259 @@
+{
+  "format_version": 1,
+  "algorithm": "dijkstra",
+  "frames": [
+    {
+      "algorithm": "dijkstra",
+      "step": 0,
+      "event": "init",
+      "state": {
+        "start": "A",
+        "dist": {
+          "A": 0
+        }
+      }
+    },
+    {
+      "algorithm": "dijkstra",
+      "step": 1,
+      "event": "visit",
+      "state": {
+        "node": "A",
+        "dist": 0
+      }
+    },
+    {
+      "algorithm": "dijkstra",
+      "step": 2,
+      "event": "relax",
+      "state": {
+        "node": "A",
+        "neighbor": "B",
+        "new_dist": 2,
+        "dist": {
+          "A": 0,
+          "B": 2
+        }
+      }
+    },
+    {
+      "algorithm": "dijkstra",
+      "step": 3,
+      "event": "relax",
+      "state": {
+        "node": "A",
+        "neighbor": "C",
+        "new_dist": 5,
+        "dist": {
+          "A": 0,
+          "B": 2,
+          "C": 5
+        }
+      }
+    },
+    {
+      "algorithm": "dijkstra",
+      "step": 4,
+      "event": "visit",
+      "state": {
+        "node": "B",
+        "dist": 2
+      }
+    },
+    {
+      "algorithm": "dijkstra",
+      "step": 5,
+      "event": "relax",
+      "state": {
+        "node": "B",
+        "neighbor": "C",
+        "new_dist": 3,
+        "dist": {
+          "A": 0,
+          "B": 2,
+          "C": 3
+        }
+      }
+    },
+    {
+      "algorithm": "dijkstra",
+      "step": 6,
+      "event": "relax",
+      "state": {
+        "node": "B",
+        "neighbor": "D",
+        "new_dist": 6,
+        "dist": {
+          "A": 0,
+          "B": 2,
+          "C": 3,
+          "D": 6
+        }
+      }
+    },
+    {
+      "algorithm": "dijkstra",
+      "step": 7,
+      "event": "visit",
+      "state": {
+        "node": "C",
+        "dist": 3
+      }
+    },
+    {
+      "algorithm": "dijkstra",
+      "step": 8,
+      "event": "relax",
+      "state": {
+        "node": "C",
+        "neighbor": "D",
+        "new_dist": 4,
+        "dist": {
+          "A": 0,
+          "B": 2,
+          "C": 3,
+          "D": 4
+        }
+      }
+    },
+    {
+      "algorithm": "dijkstra",
+      "step": 9,
+      "event": "relax",
+      "state": {
+        "node": "C",
+        "neighbor": "E",
+        "new_dist": 6,
+        "dist": {
+          "A": 0,
+          "B": 2,
+          "C": 3,
+          "D": 4,
+          "E": 6
+        }
+      }
+    },
+    {
+      "algorithm": "dijkstra",
+      "step": 10,
+      "event": "visit",
+      "state": {
+        "node": "D",
+        "dist": 4
+      }
+    },
+    {
+      "algorithm": "dijkstra",
+      "step": 11,
+      "event": "no_relax",
+      "state": {
+        "node": "D",
+        "neighbor": "E",
+        "candidate": 6,
+        "dist": {
+          "A": 0,
+          "B": 2,
+          "C": 3,
+          "D": 4,
+          "E": 6
+        }
+      }
+    },
+    {
+      "algorithm": "dijkstra",
+      "step": 12,
+      "event": "relax",
+      "state": {
+        "node": "D",
+        "neighbor": "F",
+        "new_dist": 10,
+        "dist": {
+          "A": 0,
+          "B": 2,
+          "C": 3,
+          "D": 4,
+          "E": 6,
+          "F": 10
+        }
+      }
+    },
+    {
+      "algorithm": "dijkstra",
+      "step": 13,
+      "event": "skip_stale",
+      "state": {
+        "node": "C",
+        "dist": 5
+      }
+    },
+    {
+      "algorithm": "dijkstra",
+      "step": 14,
+      "event": "skip_stale",
+      "state": {
+        "node": "D",
+        "dist": 6
+      }
+    },
+    {
+      "algorithm": "dijkstra",
+      "step": 15,
+      "event": "visit",
+      "state": {
+        "node": "E",
+        "dist": 6
+      }
+    },
+    {
+      "algorithm": "dijkstra",
+      "step": 16,
+      "event": "relax",
+      "state": {
+        "node": "E",
+        "neighbor": "F",
+        "new_dist": 7,
+        "dist": {
+          "A": 0,
+          "B": 2,
+          "C": 3,
+          "D": 4,
+          "E": 6,
+          "F": 7
+        }
+      }
+    },
+    {
+      "algorithm": "dijkstra",
+      "step": 17,
+      "event": "visit",
+      "state": {
+        "node": "F",
+        "dist": 7
+      }
+    },
+    {
+      "algorithm": "dijkstra",
+      "step": 18,
+      "event": "skip_stale",
+      "state": {
+        "node": "F",
+        "dist": 10
+      }
+    },
+    {
+      "algorithm": "dijkstra",
+      "step": 19,
+      "event": "done",
+      "state": {
+        "dist": {
+          "A": 0,
+          "B": 2,
+          "C": 3,
+          "D": 4,
+          "E": 6,
+          "F": 7
+        }
+      }
+    }
+  ]
+}
