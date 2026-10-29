@@ -9,9 +9,10 @@ just the final answer.
 This is an early milestone: BFS, Dijkstra, and quicksort are instrumented
 to emit their internal state as a deterministic sequence of frames via
 Python generators, those frame sequences can be saved to and loaded back
-from a "cassette" file, and a single frame's array/graph state can now be
-drawn onto a curses screen. The full VCR-style interactive playback TUI
-(step, pause, rewind) comes in a later milestone.
+from a "cassette" file, a single frame's array/graph state can be drawn
+onto a curses screen, and a play/pause/step/rewind state machine can
+scrub through a cassette's frame index. Wiring that state machine into
+a live, interactive curses TUI comes in a later milestone.
 
 ## Install
 
@@ -89,6 +90,28 @@ to draw one frame from a saved cassette:
 ```
 python -m algotape.cli view run.json --step 3
 ```
+
+### VCR controls
+
+`algotape.player.Player` is a play/pause/step/rewind state machine over a
+cassette's frame index. It has no notion of curses or wall-clock time —
+it only tracks the current index and whether playback is running — so a
+driving loop can call `tick()` on its own schedule while playing, and
+`step_forward()`/`step_backward()`/`rewind()`/`seek(index)` in response to
+key presses:
+
+```python
+from algotape.player import Player
+
+player = Player(frame_count=len(tape.frames))
+player.play()
+player.tick()           # advance one frame; auto-pauses at the last frame
+player.step_backward()  # move back one frame and pause
+player.rewind()         # jump back to frame 0 and pause
+```
+
+Wiring this into the curses `view` command as a live, interactive
+playback TUI comes in a later milestone.
 
 Run the test suite with:
 
