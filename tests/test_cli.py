@@ -48,6 +48,20 @@ class CliTest(unittest.TestCase):
         self.assertEqual(exit_code, 1)
         self.assertIn("algotape:", err.getvalue())
 
+    def test_view_reports_out_of_range_step_without_opening_a_screen(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = os.path.join(tmp, "quicksort.cassette.json")
+            record_out = io.StringIO()
+            with contextlib.redirect_stdout(record_out):
+                cli.main(["record", "quicksort", "--output", path])
+
+            err = io.StringIO()
+            with contextlib.redirect_stderr(err):
+                exit_code = cli.main(["view", path, "--step", "9999"])
+
+        self.assertEqual(exit_code, 1)
+        self.assertIn("out of range", err.getvalue())
+
 
 if __name__ == "__main__":
     unittest.main()

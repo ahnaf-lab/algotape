@@ -8,9 +8,10 @@ just the final answer.
 
 This is an early milestone: BFS, Dijkstra, and quicksort are instrumented
 to emit their internal state as a deterministic sequence of frames via
-Python generators, and those frame sequences can now be saved to and
-loaded back from a "cassette" file. The VCR-style interactive playback
-TUI comes in a later milestone.
+Python generators, those frame sequences can be saved to and loaded back
+from a "cassette" file, and a single frame's array/graph state can now be
+drawn onto a curses screen. The full VCR-style interactive playback TUI
+(step, pause, rewind) comes in a later milestone.
 
 ## Install
 
@@ -69,6 +70,24 @@ python -m algotape.cli record bfs
 python -m algotape.cli record dijkstra
 python -m algotape.cli record quicksort --output run.json
 python -m algotape.cli play run.json
+```
+
+### Rendering a frame
+
+`algotape.render.render_frame(frame)` turns one `Frame` into a list of
+plain text lines: a header naming the algorithm/step/event, then an
+algorithm-specific view of its state — an array row with `low`/`high`/
+`i`/`j`/pivot markers for quicksort, the current node/queue/visited set
+for BFS, or a node/distance table for Dijkstra. Keeping this as a pure
+function (no terminal required) is what makes it possible to golden-test
+the exact rendered output for fixed frames in `tests/test_render.py`.
+
+`algotape.screen.draw_frame(window, frame)` blits those same lines onto
+a curses window, and the CLI's `view` command opens a real curses screen
+to draw one frame from a saved cassette:
+
+```
+python -m algotape.cli view run.json --step 3
 ```
 
 Run the test suite with:

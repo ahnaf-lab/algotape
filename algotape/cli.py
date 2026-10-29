@@ -1,9 +1,11 @@
-"""Command-line entry point for recording and replaying cassettes.
+"""Command-line entry point for recording, replaying, and viewing cassettes.
 
 ``record`` runs a demo algorithm and prints its frame sequence as one JSON
 object per line, optionally saving the run to a cassette file. ``play``
-loads a previously saved cassette and prints its frames the same way. The
-VCR-style interactive playback controls come in a later milestone.
+loads a previously saved cassette and prints its frames the same way.
+``view`` draws a single frame from a cassette onto a curses screen. The
+full VCR-style interactive playback controls (step, pause, rewind) come
+in a later milestone.
 """
 
 import argparse
@@ -63,6 +65,17 @@ def _build_parser() -> argparse.ArgumentParser:
     )
     play_parser.add_argument("path", metavar="PATH", help="cassette file to load")
 
+    view_parser = subparsers.add_parser(
+        "view", help="draw one frame from a cassette file on a curses screen"
+    )
+    view_parser.add_argument("path", metavar="PATH", help="cassette file to load")
+    view_parser.add_argument(
+        "--step",
+        type=int,
+        default=0,
+        help="index into the cassette's frame sequence to draw (default: 0)",
+    )
+
     return parser
 
 
@@ -84,8 +97,21 @@ def main(argv: Optional[List[str]] = None) -> int:
         print(f"algotape: {exc}", file=sys.stderr)
         return 1
 
-    for frame in tape.frames:
-        print(json.dumps(frame.to_dict()))
+    if args.command == "play":
+        for frame in tape.frames:
+            print(json.dumps(frame.to_dict()))
+        return 0
+
+    if not 0 <= args.step < len(tape.frames):
+        print(
+            f"algotape: step {args.step} is out of range (0..{len(tape.frames) - 1})",
+            file=sys.stderr,
+        )
+        return 1
+
+    from .screen import view_frame  # imports curses, only needed for this command
+
+    view_frame(tape.frames[args.step])
     return 0
 
 

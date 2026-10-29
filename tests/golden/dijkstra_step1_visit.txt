@@ -1,0 +1,4 @@
+dijkstra | step 1 | visit
+-------------------------
+current: A
+dist: 0

@@ -1,0 +1,4 @@
+quicksort | step 1 | pivot
+--------------------------
+  5     3     8     1     9     2   
+ low                           high 

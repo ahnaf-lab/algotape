@@ -1,0 +1,4 @@
+bfs | step 0 | init
+-------------------
+queue:   [A]
+visited: [A]

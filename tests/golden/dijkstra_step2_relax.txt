@@ -1,0 +1,6 @@
+dijkstra | step 2 | relax
+-------------------------
+current: A
+relaxing: A -> B = 1
+ A  B 
+ 0  1 

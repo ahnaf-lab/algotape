@@ -1,0 +1,6 @@
+bfs | step 2 | visit
+--------------------
+current: A
+neighbor: B
+queue:   [B]
+visited: [A, B]
